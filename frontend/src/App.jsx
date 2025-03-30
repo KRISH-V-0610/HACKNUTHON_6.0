@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Patients from "./pages/Patients";
@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AddPatient from "./pages/AddPatient";
 import PatientDetails from "./pages/PatientDetails";
-import Camera from "./components/Camera";
 
 
 function App() {
@@ -25,21 +24,22 @@ function App() {
           />
         } />
 
-          <Route path="/login" element={
+
+        <Route path="/login" element={
           <Login
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
         } />
 
-          <Route path="/signup" element={
+        <Route path="/signup" element={
           <SignUp
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
         } />
 
-         <Route path="/dashboard" element={
+        <Route path="/dashboard" element={
           <Dashboard
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
@@ -52,28 +52,28 @@ function App() {
             setSidebarOpen={setSidebarOpen}
           />
         } />
-              <Route path="/addPatient" element={
-            <AddPatient 
-              sidebarOpen={sidebarOpen} 
-              setSidebarOpen={setSidebarOpen} 
-            />
-          } />
+        <Route path="/addPatient" element={
+          <AddPatient
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+        } />
 
-          
+
         <Route path="/patient/:id" element={
           <PatientDetails
             sidebarOpen={sidebarOpen}
-            
+
             setSidebarOpen={setSidebarOpen}
           />
         } />
 
         <Route path="/profile" element={
-            <Profile 
-              sidebarOpen={sidebarOpen} 
-              setSidebarOpen={setSidebarOpen} 
-            />
-          } />
+          <Profile
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+        } />
 
 
 

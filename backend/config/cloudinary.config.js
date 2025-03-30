@@ -6,12 +6,6 @@ import dotenv from 'dotenv';
 // Load environment variables FIRST
 dotenv.config();
 
-// Verify environment variables are loaded
-// console.log('Cloudinary Config Check:', {
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? '***' + process.env.CLOUDINARY_CLOUD_NAME.slice(-4) : 'MISSING',
-//   api_key: process.env.CLOUDINARY_API_KEY ? '***' + process.env.CLOUDINARY_API_KEY.slice(-4) : 'MISSING'
-// });
-
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

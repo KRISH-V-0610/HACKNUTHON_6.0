@@ -1,5 +1,7 @@
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/SideBar';
+import Camera from '../components/Camera';
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../lib/axios';
@@ -241,7 +243,7 @@ const PatientDetails = ({ sidebarOpen, setSidebarOpen }) => {
               <h2 className="text-xl font-semibold text-teal-800 mb-4 flex items-center">
                 <GiStethoscope className="mr-2" /> Upload New Skin Image
               </h2>
-
+             
               <div
                 className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${dragActive ? 'border-teal-500 bg-teal-50' : 'border-gray-300 hover:border-teal-400'
                   }`}
@@ -267,6 +269,8 @@ const PatientDetails = ({ sidebarOpen, setSidebarOpen }) => {
                 >
                   Select Image
                 </label>
+                 
+              <Camera id={id} />
               </div>
 
               {selectedFile && (
