@@ -71,18 +71,11 @@ const patientSchema = new mongoose.Schema({
   }],
 
   aiModelOutput: {
-    diagnosis: String,
-    confidence: Number,
-    conditions: [{
-      name: String,
-      probability: Number
-    }],
-    recommendations: [String],
-    severity: {
-      type: String,
-      enum: ['Low', 'Medium', 'High', 'Critical']
-    },
-    notes: String
+      image_url: String,
+      jarvis: String,
+      prediction: String,
+      report: String,
+      verify: String,
   },
  
 }, { timestamps: true });

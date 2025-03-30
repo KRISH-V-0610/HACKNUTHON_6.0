@@ -108,7 +108,7 @@ const Patients = ({ sidebarOpen, setSidebarOpen }) => {
           className="px-6 py-2 bg-teal-600 text-white rounded-lg flex items-center gap-2"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/patient/new')}
+          onClick={() => navigate('/addPatient')}
         >
           <FaPlus /> Add New Patient
         </motion.button>

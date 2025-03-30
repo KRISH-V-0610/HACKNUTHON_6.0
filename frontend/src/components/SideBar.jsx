@@ -4,7 +4,7 @@ import {
   FiUsers, FiSettings, FiHelpCircle,
   FiX,FiHome
 } from 'react-icons/fi';
-
+import { IoAddCircleOutline } from "react-icons/io5";
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div 
@@ -36,9 +36,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <nav className="flex-1">
           <ul className="space-y-1">
             {[
-               { icon: <FiHome size={20} />, text: 'Dashboard', path: '/dashboard' },
+              { icon: <IoAddCircleOutline size={20} />, text: 'Add Patient', path: '/addPatient' },
               { icon: <FiUsers size={20} />, text: 'Patients', path: '/patients' },
-              { icon: <FiSettings size={20} />, text: 'Add Patient', path: '/addPatient' },
               { icon: <FiSettings size={20} />, text: 'Settings', path: '/settings' },
               { icon: <FiHelpCircle size={20} />, text: 'Help Center', path: '/help' },
             ].map((item, index) => (

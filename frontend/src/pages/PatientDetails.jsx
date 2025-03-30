@@ -104,16 +104,20 @@ const PatientDetails = ({ sidebarOpen, setSidebarOpen }) => {
   const predictDisease = async (patientObjIdString) => {
     try {
       setPredictionLoading(true);
-      const response = await axiosInstance.post(``, {
-        patient: patientObjIdString,
-      });
+      // console.log(patientObjIdString);
+      const swaggerData = {
+        obj_id: patientObjIdString
+      }
+      const response = await axiosInstance.post(`http://localhost:6700/predict`, swaggerData);
 
+      // Update patient's prediction data with the new prediction result
       console.log('Prediction response:', response.data);
       setPredictionData(response.data);
 
       // Redirect to dashboard after slight delay to show success
       setTimeout(() => {
-        navigate('/dashboard', { state: response.data });
+        console.log(patient);
+        navigate('/dashboard', { state: {reportData:response.data ,patientData:patient} });
       }, 1000);
 
     } catch (err) {

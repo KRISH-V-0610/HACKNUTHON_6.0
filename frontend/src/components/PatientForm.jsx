@@ -9,7 +9,8 @@ const PatientForm = () => {
     name: '',
     dob: null,
     bloodGroup: '',
-    gender: ''
+    gender: '',
+    age:0
   });
   const [profileImage, setProfileImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,7 +27,8 @@ const PatientForm = () => {
   const handleDateChange = (date) => {
     setFormData(prev => ({
       ...prev,
-      dob: date
+      dob: date,
+      age: date.getFullYear() - new Date().getFullYear()
     }));
   };
 

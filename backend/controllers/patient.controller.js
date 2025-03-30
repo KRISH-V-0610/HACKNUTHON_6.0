@@ -2,6 +2,12 @@ import Patient from '../models/patient.model.js';
 import Predict from '../models/predict.model.js';
 import {cloudinary,upload} from '../config/cloudinary.config.js';
 import User from '../models/user.model.js';
+import mongoose from 'mongoose';
+
+
+
+
+
 
 export const addPatient = async (req, res) => {   
   try {
@@ -191,7 +197,68 @@ export const getPatientById = async (req, res) => {
   }
 };
 
+export const updatePatient = async (req, res) => {
 
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    // Validate the patient ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid patient ID format' 
+      });
+    }
+
+    // Find and update the patient
+    const updatedPatient = await Patient.findByIdAndUpdate(
+      id,
+      updateData,
+      { 
+        new: true,
+        runValidators: true
+      }
+    ).lean();
+
+    if (!updatedPatient) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Patient not found' 
+      });
+    }
+
+    // Prepare response data
+    const responseData = {
+      success: true,
+      data: {
+        ...updatedPatient,
+        // age: calculateAge(updatedPatient.dob),
+        // caseId: updatedPatient.caseId || generateCaseId(updatedPatient.name)
+      }
+    };
+
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error('Error updating patient:', error);
+    
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        errors: error.errors 
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+
+
+};
 
 
 

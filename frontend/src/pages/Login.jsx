@@ -59,7 +59,7 @@ const Login = () => {
       localStorage.setItem('authToken', response.data.token);
       
       // Redirect to dashboard or home page
-      window.location.href = '/dashboard';
+      window.location.href = '/patients';
 
     } catch (err) {
       setLoading(false);
