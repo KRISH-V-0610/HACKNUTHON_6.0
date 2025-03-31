@@ -239,6 +239,7 @@ const PatientForm = () => {
         bloodGroup: '',
         gender: ''
       });
+      window.location.href = '/patients';
       setProfileImage(null);
       setErrors({});
   
@@ -266,7 +267,7 @@ const PatientForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl">
+    <div className="mt-10 max-w-md mx-auto p-6 bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl">
       <div className="mb-6 text-center">
         <h3 className="text-2xl font-bold text-teal-700 mb-1">Add New Patient</h3>
         <p className="text-sm text-gray-500">Fill in the details to register a new patient</p>

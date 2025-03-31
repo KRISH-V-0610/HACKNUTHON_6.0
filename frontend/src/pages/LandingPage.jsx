@@ -187,7 +187,7 @@ const LandingPage = () => {
               className="hidden md:block"
             >
               <ul className="flex space-x-8">
-                {['Features', 'Technology', 'Research', 'Testimonials', 'Contact'].map((item) => (
+                {['Features', 'Technology', 'Research',  'Contact'].map((item) => (
                   <motion.li
                     key={item}
                     whileHover={{ scale: 1.05 }}

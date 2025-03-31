@@ -4,7 +4,7 @@ import {axiosInstance} from '../lib/axios.js'; // Adjust the import based on you
 import { FaUserMd, FaEnvelope, FaLock, FaUserPlus, FaClinicMedical } from 'react-icons/fa';
 import { MdOutlineMedicalServices } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-
+import bg from './bg.jpeg'
 const Signup = () => {
 
   const [formData, setFormData] = useState({
@@ -60,6 +60,7 @@ const Signup = () => {
 
       // Handle successful registration
       console.log('Registration successful:', response.data);
+      alert('Registration successful');
       setSuccess(true);
       
       // Optionally: Store the token in localStorage or context
@@ -68,7 +69,7 @@ const Signup = () => {
       }
       
       // Optionally redirect to login or dashboard
-      // window.location.href = '/login';
+      window.location.href = '/patients';
 
     } catch (err) {
       setLoading(false);
@@ -86,9 +87,17 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-50 flex flex-col lg:flex-row">
-      <div className="relative lg:w-1/2 h-64 lg:h-auto overflow-hidden bg-gradient-to-b from-teal-700 to-emerald-800">
-        {/* Medical Background Image */}
-      </div>
+        <div
+             className="relative lg:w-1/2 h-64 lg:h-auto overflow-hidden"
+             style={{
+               background: `linear-gradient(to bottom, rgba(15, 118, 110, 0.8), rgba(6, 95, 70, 0.8)), url(${bg})`,
+               backgroundSize: 'cover',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat'
+             }}
+           >
+             {/* Content goes here if needed */}
+           </div>
 
       {/* Signup Form Side */}
       <motion.div
@@ -116,7 +125,7 @@ const Signup = () => {
               variants={itemVariants}
               className="text-3xl font-bold text-gray-800 mb-2"
             >
-              Physician Registration
+              Dermatologist Registration
             </motion.h1>
             <motion.p
               variants={itemVariants}
@@ -159,7 +168,7 @@ const Signup = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-200 outline-none transition"
-                  placeholder="Dr. Jane Smith"
+                  placeholder="Dr. Madhukant Patel"
                   required
                 />
               </div>

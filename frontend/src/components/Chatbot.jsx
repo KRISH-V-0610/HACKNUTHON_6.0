@@ -11,7 +11,7 @@ import DoctorIllustration from './bot2.png';
 const ChatbotInterface = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hello! I'm Dr. Green. How can I assist with your health today?", sender: 'bot' }
+    { text: "Hello! I'm Dr. Shushrut. How can I assist with your health today?", sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -200,7 +200,7 @@ const ChatbotInterface = () => {
                       <RiStethoscopeFill className="w-full h-full text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white">Dr. Green</h3>
+                      <h3 className="font-semibold text-white">Dr. Shushrut</h3>
                       <p className="text-xs text-emerald-100">
                         {isBotTyping ? 'Thinking...' :
                           isListening ? 'Listening...' : 'Online'}
@@ -239,14 +239,54 @@ const ChatbotInterface = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
-                      className={`mb-4 flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                      className={`mb-4 flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} `}
                     >
                       <div
-                        className={`max-w-lg px-4 py-3 rounded-2xl ${message.sender === 'user'
-                          ? 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-br-none'
-                          : 'bg-white text-gray-800 shadow-sm rounded-bl-none'}`}
+                      className={`max-w-lg px-4 py-3 rounded-2xl 
+                        ${message.sender === 'user' 
+                          ? 'bg-gradient-to-r from-emerald-300 to-emerald-200 font-semibold text-white rounded-br-none' 
+                          : 'bg-white text-gray-800 shadow-sm rounded-bl-none'
+                        }`}
+                      
                       >
-                        <p className="text-sm"><ReactMarkdown>{message.text}</ReactMarkdown></p>
+                        <p className="text-sm"><ReactMarkdown
+                             components={{
+                              // Make links blue and open in new tab
+                              a: ({node, ...props}) => (
+                                <a 
+                                  className="text-blue-600 hover:text-blue-800 hover:underline transition-colors" 
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  {...props}
+                                />
+                              ),
+                              // Style headings
+                              h3: ({node, ...props}) => (
+                                <h3 className="text-2xl font-semibold text-gray-800 mt-8 mb-4 border-b pb-2" {...props} />
+                              ),
+                              h4: ({node, ...props}) => (
+                                <h4 className="text-xl font-medium text-gray-800 mt-6 mb-3" {...props} />
+                              ),
+                              // Style lists
+                              ul: ({node, ...props}) => (
+                                <ul className="list-disc pl-5 my-4 space-y-2" {...props} />
+                              ),
+                              li: ({node, ...props}) => (
+                                <li className="pl-2" {...props} />
+                              ),
+                              // Style bold text
+                              strong: ({node, ...props}) => (
+                                <strong className="font-semibold text-gray-900" {...props} />
+                              ),
+                              // Style paragraphs
+                              p: ({node, ...props}) => (
+                                <p className="my-4 leading-relaxed text-gray-700" {...props} />
+                              )
+                            }}
+                        
+                        >
+
+                          {message.text}</ReactMarkdown></p>
                         {message.sender === 'bot' && (
                           <button
                             onClick={() => {
@@ -487,7 +527,7 @@ const ChatbotInterface = () => {
             <img
               src={DoctorIllustration}
               alt="Doctor Avatar"
-              className="w-16 h-16 object-contain drop-shadow-lg"
+              className="w-32 h-32 object-contain drop-shadow-lg"
             />
             <motion.div
               className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white"
@@ -629,6 +669,58 @@ const ChatbotInterface = () => {
 
                   {/* Action Buttons */}
                   <div className="absolute right-2 flex space-x-2 z-20">
+                  <div className="relative">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setDeepSearch((prev) => !prev)}
+                          className={`p-2 rounded-full relative z-10 transition-all flex items-center justify-center ${deepSearch
+                              ? "bg-gradient-to-br from-teal-500 to-teal-600 text-white shadow-lg"
+                              : "bg-gradient-to-br from-gray-200 to-gray-300 text-gray-700 hover:shadow-md"
+                            }`}
+                          style={{
+                            borderRadius: "9999px",
+                            width: "40px",
+                            height: "40px",
+                            boxShadow: deepSearch
+                              ? "0 2px 15px rgba(59, 130, 246, 0.5)"
+                              : "0 2px 8px rgba(156, 163, 175, 0.3)",
+                          }}
+                          aria-label={deepSearch ? "Disable deep search" : "Enable deep search"}
+                          title={deepSearch ? "Deep search active" : "Deep search inactive"}
+                        >
+                          {deepSearch ? (
+                            <>
+                              <motion.div
+                                className="absolute -inset-1 rounded-full bg-teal-400/20"
+                                animate={{
+                                  scale: [1, 1.2, 1],
+                                  opacity: [0.7, 0.9, 0.7],
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                }}
+                              />
+                              <FaSearchPlus className="text-sm" />
+                            </>
+                          ) : (
+                            <FaSearch className="text-sm" />
+                          )}
+                        </motion.button>
+
+                        {deepSearch && (
+                          <motion.div
+                            className="absolute -top-2 -right-2 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-white"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                          >
+                            <FaBolt className="text-xs" />
+                          </motion.div>
+                        )}
+                      </div>
+                      
                     <button
                       onClick={isListening ? stopListening : startListening}
                       className={`p-2 rounded-full transition-all ${isListening

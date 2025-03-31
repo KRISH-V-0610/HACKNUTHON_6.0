@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { axiosInstance } from '../lib/axios';
 import { FaUserMd, FaLock, FaSignInAlt } from 'react-icons/fa';
 import { MdOutlineMedicalServices } from 'react-icons/md';
-
+import bg from './bg.jpeg'
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -54,10 +54,10 @@ const Login = () => {
 
       // Handle successful login
       console.log('Login successful:', response.data);
-      
+
       // Store the token in localStorage or context
       localStorage.setItem('authToken', response.data.token);
-      
+
       // Redirect to dashboard or home page
       window.location.href = '/patients';
 
@@ -78,8 +78,16 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-50 flex flex-col lg:flex-row">
-      <div className="relative lg:w-1/2 h-64 lg:h-auto overflow-hidden bg-gradient-to-b from-teal-700 to-emerald-800">
-        {/* Medical Background Image */}
+      <div
+        className="relative lg:w-1/2 h-64 lg:h-auto overflow-hidden"
+        style={{
+          background: `linear-gradient(to bottom, rgba(15, 118, 110, 0.8), rgba(6, 95, 70, 0.8)), url(${bg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Content goes here if needed */}
       </div>
 
       {/* Login Form Side */}
@@ -103,7 +111,7 @@ const Login = () => {
               variants={itemVariants}
               className="text-3xl font-bold text-gray-800 mb-2"
             >
-              Medical Portal Login
+             Welcome to Shushrut<i className='text-teal-500'> AI</i>
             </motion.h1>
             <motion.p
               variants={itemVariants}
@@ -114,7 +122,7 @@ const Login = () => {
           </div>
 
           {error && (
-            <motion.div 
+            <motion.div
               className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -164,7 +172,7 @@ const Login = () => {
               type="submit"
               className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow-md transition-all flex items-center justify-center"
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.01,
                 boxShadow: "0px 4px 10px rgba(13, 148, 136, 0.3)"
               }}
