@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import { generateToken } from '../lib/utils.js';
+import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res) => {
 
@@ -65,6 +66,67 @@ export const logout = (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    // Get token from cookies
+    const token = req.cookies.token;
+    
+    if (!token) {
+      return res.status(401).json({ 
+        success: false,
+        message: 'Not authorized, no token provided' 
+      });
+    }
+
+    // Verify and decode the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    
+    // Find the user by ID from decoded token
+    const user = await User.findById(decoded.userId)
+      .select('-password -__v') // Exclude sensitive/uneeded fields
+      .populate({
+        path: 'patients',
+        select: '-__v -createdAt -updatedAt' // Exclude unnecessary patient fields
+      });
+
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'User not found' 
+      });
+    }
+
+    // Return the user data
+    res.status(200).json({
+      success: true,
+      data: user
+    });
+
+  } catch (error) {
+    console.error('Error fetching current user:', error);
+    
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ 
+        success: false,
+        message: 'Not authorized, invalid token' 
+      });
+    }
+
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ 
+        success: false,
+        message: 'Session expired, please login again' 
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Server error while fetching user data',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};
 
 // export const updateProfile = async (req,res)=>{
 //     try {

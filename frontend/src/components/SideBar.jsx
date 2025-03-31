@@ -38,9 +38,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             {[
               { icon: <IoAddCircleOutline size={20} />, text: 'Add Patient', path: '/addPatient' },
               { icon: <FiUsers size={20} />, text: 'Patients', path: '/patients' },
-              { icon: <FiSettings size={20} />, text: 'Settings', path: '/settings' },
-              { icon: <FiHelpCircle size={20} />, text: 'Help Center', path: '/help' },
-            ].map((item, index) => (
+              ].map((item, index) => (
               <li key={index}>
                 <Link 
                   to={item.path}

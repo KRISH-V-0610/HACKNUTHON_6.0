@@ -34,11 +34,11 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
   const downloadPDF = async () => {
     setIsGeneratingPDF(true);
     const input = pdfRef.current;
-    
+
     // Hide non-printable elements
     const elementsToHide = document.querySelectorAll('.no-print');
     elementsToHide.forEach(el => el.style.visibility = 'hidden');
-    
+
     try {
       // Create clone for PDF processing
       const clone = input.cloneNode(true);
@@ -109,7 +109,7 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
       const padding = 10;
-      
+
       const imgData = canvas.toDataURL('image/png');
       const imgProps = pdf.getImageProperties(imgData);
       const imgWidth = pageWidth - padding * 2;
@@ -117,7 +117,7 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
 
       // Add first page
       pdf.addImage(imgData, 'PNG', padding, 0, imgWidth, imgHeight);
-      
+
       // Add additional pages if needed
       let heightLeft = imgHeight - pageHeight;
       let position = 0;
@@ -148,31 +148,29 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
 
       <main className={`pt-16 transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
         {/* Download Button with Loader */}
-        <div className="fixed bottom-8 right-8 z-50 no-print">
-          <button 
-            onClick={downloadPDF}
-            disabled={isGeneratingPDF}
-            className={`bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center transition-all ${
-              isGeneratingPDF ? 'opacity-75 cursor-not-allowed' : ''
+        <div className="fixed bottom-8 left-1/3 transform -translate-x-1/2 z-50 no-print">          <button
+          onClick={downloadPDF}
+          disabled={isGeneratingPDF}
+          className={`bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center transition-all ${isGeneratingPDF ? 'opacity-75 cursor-not-allowed' : ''
             }`}
-          >
-            {isGeneratingPDF ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Generating...
-              </>
-            ) : (
-              <>
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download Report
-              </>
-            )}
-          </button>
+        >
+          {isGeneratingPDF ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Generating...
+            </>
+          ) : (
+            <>
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Download Report
+            </>
+          )}
+        </button>
         </div>
 
         {/* Report Content */}
@@ -214,34 +212,34 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
                       </svg>
                       Patient Profile
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                       <div className="bg-white p-3 rounded-md border border-[#e5e7eb] shadow-xs">
                         <p className="text-xs font-semibold text-[#0d9488] uppercase tracking-wider">Name</p>
                         <p className="text-lg font-medium text-[#1f2937] mt-1">{Data.patientData.name}</p>
                       </div>
-                      
+
                       <div className="bg-white p-3 rounded-md border border-[#e5e7eb] shadow-xs">
                         <p className="text-xs font-semibold text-[#0d9488] uppercase tracking-wider">Age</p>
                         <p className="text-lg font-medium text-[#1f2937] mt-1">
                           {Data.patientData.age} years
                         </p>
                       </div>
-                      
+
                       <div className="bg-white p-3 rounded-md border border-[#e5e7eb] shadow-xs">
                         <p className="text-xs font-semibold text-[#0d9488] uppercase tracking-wider">Gender</p>
                         <p className="text-lg font-medium text-[#1f2937] mt-1 capitalize">
                           {Data.patientData.gender}
                         </p>
                       </div>
-                      
+
                       <div className="bg-white p-3 rounded-md border border-[#e5e7eb] shadow-xs">
                         <p className="text-xs font-semibold text-[#0d9488] uppercase tracking-wider">Case ID</p>
                         <p className="text-lg font-medium text-[#1f2937] mt-1 font-mono">
                           {Data.patientData.caseId}
                         </p>
                       </div>
-                      
+
                       <div className="bg-white p-3 rounded-md border border-[#e5e7eb] shadow-xs">
                         <p className="text-xs font-semibold text-[#0d9488] uppercase tracking-wider">Date Registered</p>
                         <p className="text-lg font-medium text-[#1f2937] mt-1">
@@ -252,7 +250,7 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
                           })}
                         </p>
                       </div>
-                      
+
                       <div className="bg-white p-3 rounded-md border border-[#e5e7eb] shadow-xs">
                         <p className="text-xs font-semibold text-[#0d9488] uppercase tracking-wider">Status</p>
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#ccfbf1] text-[#115e59] mt-1">
@@ -341,7 +339,7 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
                               stroke={status === 'Unhealthy' ? '#EF4444' : '#0D9488'}
                               strokeWidth="3"
                               strokeDasharray={`${cleanPredConfidence}, 100`}
-                            />  
+                            />
                           </svg>
                           <div className="absolute inset-0 flex items-center justify-center">
                             <span className="text-sm font-bold text-[#115e59]">{cleanPredConfidence}%</span>
@@ -366,16 +364,49 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
 
               <ReactMarkdown
                 components={{
-                  h1: ({ node, ...props }) => <h1 className="text-2xl font-bold text-[#1f2937] mt-2 mb-4 pb-2 border-b border-[#e5e7eb]" {...props} />,
-                  h2: ({ node, ...props }) => <h2 className="text-xl font-semibold text-[#1f2937] mt-6 mb-3" {...props} />,
-                  h3: ({ node, ...props }) => <h3 className="text-lg font-medium text-[#1f2937] mt-5 mb-2" {...props} />,
-                  p: ({ node, ...props }) => <p className="text-[#374151] my-3 leading-relaxed" {...props} />,
-                  ul: ({ node, ...props }) => <ul className="list-disc pl-5 my-3 space-y-1" {...props} />,
-                  ol: ({ node, ...props }) => <ol className="list-decimal pl-5 my-3 space-y-1" {...props} />,
-                  li: ({ node, ...props }) => <li className="my-1.5" {...props} />,
-                  strong: ({ node, ...props }) => <strong className="font-semibold text-[#111827]" {...props} />,
-                  em: ({ node, ...props }) => <em className="italic" {...props} />,
-                  a: ({ node, ...props }) => <a className="text-[#2563eb] hover:underline" {...props} />
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-2xl font-bold text-[#1f2937] mt-2 mb-4 pb-2 border-b border-[#e5e7eb]" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-xl font-semibold text-[#1f2937] mt-6 mb-3" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-lg font-medium text-[#1f2937] mt-5 mb-2" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p className="text-[#374151] my-3 leading-relaxed" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="list-disc pl-5 my-3 space-y-1" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-5 my-3 space-y-1" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="my-1.5" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-semibold text-[#111827]" {...props} />
+                  ),
+                  em: ({ node, ...props }) => (
+                    <em className="italic" {...props} />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a 
+                      className="text-[#2563eb] hover:underline font-medium transition-colors duration-200 hover:text-[#1d4ed8]"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    />
+                  ),
+                  // Optional: Add blockquote styling if needed
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-4 border-[#e5e7eb] pl-4 italic text-[#6b7280] my-4" {...props} />
+                  ),
+                  // Optional: Add code styling if needed
+                  code: ({ node, ...props }) => (
+                    <code className="bg-[#f3f4f6] px-2 py-1 rounded text-sm font-mono" {...props} />
+                  )
                 }}
               >
                 {cleanedReport}

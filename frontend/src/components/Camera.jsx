@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
-import {toast} from "react-hot-toast"
-import {axiosInstance} from "../lib/axios";
-import { FaCamera, FaSpinner, FaPaperPlane, FaTimes, FaArrowLeft } from "react-icons/fa";
+import { toast } from "react-hot-toast";
+import { axiosInstance } from "../lib/axios";
+import { FaCamera, FaSpinner, FaPaperPlane, FaTimes, FaRedo } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-const Camera = ({id}) => {
+const Camera = ({ id }) => {
   const webcamRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -13,11 +14,11 @@ const Camera = ({id}) => {
 
   const openCamera = () => {
     setCameraActive(true);
+    setCapturedImage(null);
   };
 
   const closeCamera = () => {
     setCameraActive(false);
-    setCapturedImage(null);
   };
 
   const capture = () => {
@@ -47,12 +48,12 @@ const Camera = ({id}) => {
         }
       });
       
-      toast.success("Image uploaded successfully!"); // Green toast      
+      toast.success("Image uploaded successfully!");
       window.location.reload();
 
     } catch (error) {
       console.error("Upload error:", error);
-      toast.error("Upload failed! Try again."); // Red toast
+      toast.error("Upload failed! Try again.");
     } finally {
       setUploading(false);
       setProgress(0);
@@ -74,97 +75,115 @@ const Camera = ({id}) => {
 
   const cancelUpload = () => {
     setCapturedImage(null);
+    setCameraActive(false);
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto">
+    <div className="w-full">
       {/* Initial State - Open Camera Button */}
       {!cameraActive && !capturedImage && (
-        <button
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
           onClick={openCamera}
-          className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
+          className=" bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-all flex items-center justify-center gap-3 shadow-md"
         >
-          <FaCamera />
-          Open Camera
-        </button>
+          <FaCamera className="text-lg" />
+          <span className="font-medium">Open Camera</span>
+        </motion.button>
       )}
 
       {/* Camera View */}
       {cameraActive && (
-        <div className="mb-6">
-          <div className="relative rounded-lg overflow-hidden mb-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 bg-white rounded-xl shadow-lg p-6"
+        >
+          <div className="relative rounded-xl overflow-hidden mb-6 border-2 border-teal-100">
             <Webcam 
               ref={webcamRef} 
               screenshotFormat="image/png" 
               className="w-full"
               videoConstraints={{ facingMode: 'user' }}
               audio={false}
+              mirrored={true}
             />
             <button
               onClick={closeCamera}
-              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow"
+              className="absolute top-3 right-3 bg-white/90 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
             >
-              <FaTimes />
+              <FaTimes className="text-lg" />
             </button>
           </div>
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
             onClick={capture}
-            className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
+            className="w-full bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-all flex items-center justify-center gap-3 shadow-md"
           >
-            <FaCamera />
-            Capture Photo
-          </button>
-        </div>
+            <FaCamera className="text-lg" />
+            <span className="font-medium">Capture Photo</span>
+          </motion.button>
+        </motion.div>
       )}
 
       {/* Preview Mode */}
       {capturedImage && !cameraActive && (
-        <div className="mb-6">
-          <div className="relative mb-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-xl shadow-lg p-6 mb-6"
+        >
+          <div className="relative rounded-xl overflow-hidden mb-6 border-2 border-teal-100">
             <img
               src={capturedImage}
               alt="Preview"
-              className="w-full rounded-lg border border-gray-200"
+              className="w-full"
             />
             <button
               onClick={cancelUpload}
-              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow"
+              className="absolute top-3 right-3 bg-white/90 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
             >
-              <FaTimes />
+              <FaTimes className="text-lg" />
             </button>
           </div>
 
           <div className="flex gap-4">
-            <button
-              onClick={cancelUpload}
-              className="flex-1 bg-gray-200 text-gray-800 px-4 py-3 rounded-lg hover:bg-gray-300 flex items-center justify-center gap-2"
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => { setCapturedImage(null); setCameraActive(true); }}
+              className="flex-1 bg-gray-100 text-gray-800 px-4 py-3 rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center gap-3 shadow-md"
             >
-              <FaArrowLeft />
-              Cancel
-            </button>
-            <button
+              <FaRedo className="text-lg" />
+              <span className="font-medium">Retake</span>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={uploadImage}
               disabled={uploading}
-              className={`flex-1 px-4 py-3 rounded-lg flex items-center justify-center gap-2 ${
+              className={`flex-1 px-4 py-3 rounded-lg flex items-center justify-center gap-3 shadow-md transition-all ${
                 uploading
-                  ? 'bg-blue-400 text-white cursor-wait'
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  ? 'bg-teal-500 text-white cursor-wait'
+                  : 'bg-teal-600 hover:bg-teal-700 text-white'
               }`}
             >
               {uploading ? (
                 <>
-                  <FaSpinner className="animate-spin" />
-                  {progress}%
+                  <FaSpinner className="animate-spin text-lg" />
+                  <span className="font-medium">{progress}%</span>
                 </>
               ) : (
                 <>
-                  <FaPaperPlane />
-                  Upload
+                  <FaPaperPlane className="text-lg" />
+                  <span className="font-medium">Upload</span>
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

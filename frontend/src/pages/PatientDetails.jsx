@@ -269,14 +269,15 @@ const PatientDetails = ({ sidebarOpen, setSidebarOpen }) => {
                 />
                 <label
                   htmlFor="skinImageUpload"
-                  className="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg cursor-pointer hover:bg-teal-700 transition-colors"
+                  className="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg cursor-pointer hover:bg-teal-700 transition-colors font-semibold" 
                 >
                   Select Image
                 </label>
                  
-              <Camera id={id} />
               </div>
-
+              <div className="mt-2">
+              <Camera  id={id} />
+              </div>
               {selectedFile && (
                 <div className="mt-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                   <div className="flex items-center">

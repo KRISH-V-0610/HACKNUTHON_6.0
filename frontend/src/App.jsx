@@ -8,13 +8,13 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AddPatient from "./pages/AddPatient";
 import PatientDetails from "./pages/PatientDetails";
-
+import ChatbotInterface from "./components/Chatbot";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
-
+ < ChatbotInterface/>
       <Routes>
 
         <Route path="/" element={
